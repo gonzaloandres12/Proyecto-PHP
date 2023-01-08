@@ -8,6 +8,12 @@ require_once 'app/config/configDB.php';
 require_once 'app/models/Cliente.php';
 require_once 'app/models/AccesoDatos.php';
 require_once 'app/controllers/crudclientes.php';
+require_once 'vendor\autoload.php';
+if(!isset($msg)){
+    echo "";
+}else{
+    echo $msg;
+}
 
 //---- PAGINACIÓN ----
 $midb = AccesoDatos::getModelo();
@@ -46,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET" ){
      switch ( $_GET['nav-detalles']) {
         case "Siguiente": crudDetallesSiguiente($_GET['id']); break;
         case "Anterior" : crudDetallesAnterior($_GET['id']); break;
+        case "Imprimir" : crudImprimirPDF($_GET['id']);break;
         
     }
      }
@@ -58,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET" ){
             case "Modificar": crudModificar($_GET['id']); break;
             case "Detalles" : crudDetalles ($_GET['id']);break;
             case "Terminar" : crudTerminar(); break;
+            case "Ordenar"  : crudOrdenar($_GET['name'],$_SESSION['posini'],FPAG);break;
         }
     }
 } 
@@ -81,7 +89,7 @@ if ( ob_get_length() == 0){
     require_once "app/views/list.php";    
 }
 $contenido = ob_get_clean();
-
+                                                                                                                                                              
 // Muestro la página principal con el contenido generado
 require_once "app/views/principal.php";
 

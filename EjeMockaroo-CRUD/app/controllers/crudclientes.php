@@ -1,5 +1,18 @@
 <?php
+function crudOrdenar($orden,$primero,$cuantos){
+    $db = AccesoDatos::getModelo();
+    $tvalores = $db->ordenarTabla($orden,$primero,$cuantos);
+    include_once "app/views/list.php";    
+    
+}
 
+
+function crudImprimirPDF($id){
+    $db = AccesoDatos::getModelo();
+    $cli = $db->getCliente($id);
+    crearPdf($cli);
+    
+}
 function crudBorrar ($id){    
     $db = AccesoDatos::getModelo();
     $tuser = $db->borrarCliente($id);
@@ -13,15 +26,10 @@ function crudTerminar(){
 function crudAlta(){
     $cli = new Cliente();
     $orden= "Nuevo";
-    $id = obtenerNextId();
     include_once "app/views/formulario.php";
 }
 
-function obtenerNextId(){
-    $db = AccesoDatos::getModelo();
-    return $id = $db->getNextId();
-    
-}
+
 
 function crudDetalles($id){
     $db = AccesoDatos::getModelo();
@@ -60,7 +68,12 @@ function crudPostAlta(){
     $cli->ip_address    =$_POST['ip_address'];
     $cli->telefono      =$_POST['telefono'];
     $db = AccesoDatos::getModelo();
-    $db->addCliente($cli);
+    //Antes de guardar el cliente coprobar que el email y el telefono no estan repetidos
+    $emailValor = $db->comprobarExisteEmail($cli->email);
+    if($emailValor==0 && filter_var($cli->ip_address,FILTER_VALIDATE_IP) && preg_match('/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/',$cli->telefono)){
+      $db->addCliente($cli);
+    }
+    
     
 }
 
@@ -76,6 +89,12 @@ function crudPostModificar(){
     $cli->ip_address    =$_POST['ip_address'];
     $cli->telefono      =$_POST['telefono'];
     $db = AccesoDatos::getModelo();
-    $db->modCliente($cli);
+    $emailValor = $db->comprobarExisteEmail($cli->email);
+    if($emailValor==0 && filter_var($cli->ip_address,FILTER_VALIDATE_IP) && preg_match('/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/',$cli->telefono)){
+        $db->modCliente($cli);
+    }
+   
     
 }
+
+

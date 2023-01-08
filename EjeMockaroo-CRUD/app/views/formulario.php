@@ -27,4 +27,3 @@
  <input type="submit"	 name="orden" 	value="<?=$orden?>">
  <input type="submit"	 name="orden" 	value="Volver">
 </form> 
-

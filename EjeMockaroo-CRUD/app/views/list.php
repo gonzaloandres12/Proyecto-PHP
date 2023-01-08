@@ -1,12 +1,15 @@
-
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 <form>
 <button type="submit" name="orden" value="Nuevo"> Cliente Nuevo </button><br>
 </form>
 <br>
 
 <table>
-<tr><th>id</th><th>first_name</th><th>email</th>
-<th>gender</th><th>ip_address</th><th>teléfono</th></tr>
+<tr><th>id</th><th> <a href="?orden=Ordenar&name=first_name">first_name</a></th>
+<th><a href="?orden=Ordenar&name=email">email</a></th>
+<th><a href="?orden=Ordenar&name=gender">gender</a> </th>
+<th><a href="?orden=Ordenar&name=ip_address">ip_address</a></th>
+<th><a href="?orden=Ordenar&name=telefono">teléfono</a></th></tr>
 <?php foreach ($tvalores as $valor): ?>
 <tr>
 <td><?= $valor->id ?> </td>

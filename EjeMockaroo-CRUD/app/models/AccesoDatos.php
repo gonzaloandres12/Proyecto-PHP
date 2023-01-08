@@ -132,6 +132,40 @@ class AccesoDatos {
         return $cli;
 
     }
+    //Comprobar si existe
+    public function comprobarExisteEmail($valor){
+
+        $result = $this->dbh->query("SELECT COUNT(*) FROM clientes WHERE 'email' = '$valor';");
+        $row = mysqli_fetch_row($result);
+        return $row[0];
+     
+
+    }
+
+    //ordenar tabla
+    public function ordenarTabla($orden,$primero,$cuantos){
+        $tuser = [];
+        // Crea la sentencia preparada
+       // echo "<h1> $primero : $cuantos  </h1>";
+       echo $orden;
+        $stmt_usuarios  = $this->dbh->prepare("select * from Clientes  ORDER BY $orden limit $primero,$cuantos");
+        // Si falla termina el programa
+        if ( $stmt_usuarios == false) die (__FILE__.':'.__LINE__.$this->dbh->error);
+        // Ejecuto la sentencia
+        $stmt_usuarios->execute();
+        // Obtengo los resultados
+        $result = $stmt_usuarios->get_result();
+        // Si hay resultado correctos
+        if ( $result ){
+            // Obtengo cada fila de la respuesta como un objeto de tipo Usuario
+            while ( $user = $result->fetch_object('Cliente') ){
+               $tuser[]= $user;
+            }
+        }
+        // Devuelvo el array de objetos
+        return $tuser;
+
+    }
 
     public function getNextId(){
         $stmt_usuarios  = $this->dbh->prepare("SELECT id+1 FROM `Clientes` order by id DESC LIMIT 1 "); 
