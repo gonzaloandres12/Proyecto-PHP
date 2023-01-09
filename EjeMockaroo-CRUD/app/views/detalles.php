@@ -7,16 +7,8 @@
 <table>
  <tr><td>id:</td> 
  <td><input type="number" name="id" value="<?=$cli->id ?>"  readonly > </td>
- <td rowspan="7">
-<?php 
-if($_GET['id']>10){
-    //valor de 1-11 por que si no los nombre de las imagenes no coinciden los id grandes al no tener una bbdd de img asignada a cada id
-$resta = $_GET['id']%10;
-}else{
-    $resta = $_GET['id'];
-}
-?>
-<img src="app/uploads/00000<?=$resta?>.jpg"></img></td> 
+ <td rowspan="7"><img src="app/uploads/.jpg" alt="fotoUsuario"></img>
+ <img src="" alt="localizacion geografica"></img></td> 
 </tr>
  <tr><td>first_name:</td> 
  <td><input type="text" name="first_name" value="<?=$cli->first_name ?>" readonly > </td></tr>
@@ -37,7 +29,19 @@ $resta = $_GET['id']%10;
  <td><input type="tel" name="telefono" value="<?=$cli->telefono ?>" readonly ></td></tr>
  </tr>
  </table>
- 
+
+ <picture>
+  <source
+    type="image/webp"
+    srcset="https://flagcdn.com/w2560/<?=paisApartideIP($cli->ip_address)?>.webp">
+  <source
+    type="image/png"
+    srcset="https://flagcdn.com/w2560/<?=paisApartideIP($cli->ip_address)?>.png">
+  <img
+    src="https://flagcdn.com/w2560/<?=paisApartideIP($cli->ip_address)?>.png"
+    width="200"
+    alt="<?=paisApartideIP($cli->ip_address)?>">
+</picture>
 <form>
 <input type="hidden"  name="id" value="<?=$cli->id ?>">
 <button type="submit" name="nav-detalles" value="Anterior"> Anterior  </button>
