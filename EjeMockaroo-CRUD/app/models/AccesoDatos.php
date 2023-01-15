@@ -25,7 +25,7 @@ class AccesoDatos {
     private function __construct(){
         
        
-         $this->dbh = new mysqli(DB_SERVER,DB_USER,DB_PASSWD,DATABASE);
+         $this->dbh = new mysqli(DB_SERVER,DB_USER,DB_PASSWD,DATABASE_CLIENTES);
          
       if ( $this->dbh->connect_error){
          die(" Error en la conexión ".$this->dbh->connect_errno);

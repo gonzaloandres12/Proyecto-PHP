@@ -7,14 +7,14 @@ require_once 'app/helpers/util.php';
 require_once 'app/config/configDB.php';
 require_once 'app/models/Cliente.php';
 require_once 'app/models/AccesoDatos.php';
+require_once 'app/models/User.php';
+require_once 'app/models/AccesoDatosLogin.php';
 require_once 'app/controllers/crudclientes.php';
 require_once 'vendor\autoload.php';
-if(!isset($msg)){
-    echo "";
-}else{
-    echo $msg;
-}
 
+
+
+if(isset($_SESSION['user'])){
 //---- PAGINACIÓN ----
 $midb = AccesoDatos::getModelo();
 $totalfilas = $midb->numClientes();
@@ -46,6 +46,15 @@ if ($_SERVER['REQUEST_METHOD'] == "GET" ){
         $_SESSION['posini'] = $posAux;
     }
 
+    if ( isset($_GET['Salir'])) {
+        switch ( $_GET['Salir']) {
+            case "Salir"  : unset($_SESSION['user']);
+            header("Refresh:1");
+           
+        }
+      
+    }
+
 
      // Proceso las ordenes de navegación en detalles
     if ( isset($_GET['nav-detalles']) && isset($_GET['id']) ) {
@@ -55,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET" ){
         case "Imprimir" : crudImprimirPDF($_GET['id']);break;
         
     }
-     }
+    }
 
     // Proceso de ordenes de CRUD clientes
     if ( isset($_GET['orden'])){
@@ -89,9 +98,28 @@ if ( ob_get_length() == 0){
     require_once "app/views/list.php";    
 }
 $contenido = ob_get_clean();
+
                                                                                                                                                               
 // Muestro la página principal con el contenido generado
 require_once "app/views/principal.php";
-
-
-
+}
+else{
+    include_once "app/views/login.php";
+    if(isset($_POST['orden'])){
+        if($_POST['orden'] == "EntrarLogin"){
+            $login  = $_POST['login'];
+            $passwd = $_POST['passwd'];
+           
+            $db = AccesoDatosLogin::getModelo();
+            $res = $db->obtenerDatosLogin($login,$passwd);
+            if($res->login == $login){
+                $_SESSION['user'] = $res->login;
+                $_SESSION['rol'] = $res->rol;
+                //include_once "index.php";
+                header("Refresh:1");
+                
+            }
+        }
+     }
+     
+}

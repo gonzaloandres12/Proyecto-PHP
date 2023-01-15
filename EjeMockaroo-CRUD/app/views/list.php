@@ -32,4 +32,5 @@
 <button type="submit" name="nav" value="Anterior"> < </button>
 <button type="submit" name="nav" value="Siguiente"> > </button>
 <button type="submit" name="nav" value="Ultimo"> >> </button>
+<button type="submit" name="Salir" value="Salir">Salir del Usuario</button>
 </form>
