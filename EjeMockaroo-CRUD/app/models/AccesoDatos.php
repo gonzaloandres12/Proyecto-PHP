@@ -135,7 +135,7 @@ class AccesoDatos {
     //Comprobar si existe
     public function comprobarExisteEmail($valor){
 
-        $result = $this->dbh->query("SELECT COUNT(*) FROM clientes WHERE 'email' = '$valor';");
+        $result = $this->dbh->query("SELECT COUNT(*) FROM Clientes WHERE 'email' = '$valor';");
         $row = mysqli_fetch_row($result);
         return $row[0];
      
@@ -147,7 +147,6 @@ class AccesoDatos {
         $tuser = [];
         // Crea la sentencia preparada
        // echo "<h1> $primero : $cuantos  </h1>";
-       echo $orden;
         $stmt_usuarios  = $this->dbh->prepare("select * from Clientes  ORDER BY $orden limit $primero,$cuantos");
         // Si falla termina el programa
         if ( $stmt_usuarios == false) die (__FILE__.':'.__LINE__.$this->dbh->error);

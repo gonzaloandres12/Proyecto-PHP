@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<link href="web/css/default.css" rel="stylesheet" type="text/css"  />
-	<script src='https://www.google.com/recaptcha/api.js'></script>
+
 </head>
 
 <body>
@@ -13,7 +13,7 @@
 			<h1>ACCESO AL SISTEMA</h1>
 		</div>
 		<div id="content">
-			<form  method="POST">
+			<form  method="GET">
 				<table style="border: node; ">
 					<tr>
 						<td>identificador:</td>
@@ -24,7 +24,7 @@
 						<td><input type="text" name="passwd" size="20"></td>
 					</tr>
 				</table>
-				<input type="submit" name="orden" value="EntrarLogin">
+				<input type="submit" name="orden" value="Entrar Login">
 			</form>
 		</div>
 		<p>

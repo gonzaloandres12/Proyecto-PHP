@@ -7,3 +7,11 @@ function confirmarBorrar(nombre,id){
    document.location.href="?orden=Borrar&id="+id;
   }
 }
+
+//api desde js
+function consumirAPI(ip){
+  fetch("http://ip-api.com/json/"+ip)
+  .then(response => response.json())
+  .then(data => console.log(data.countryCode))
+  .catch(error => console.error(error))
+}

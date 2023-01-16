@@ -72,9 +72,11 @@ function crudPostAlta(){
     $emailValor = $db->comprobarExisteEmail($cli->email);
     if($emailValor==0 && filter_var($cli->ip_address,FILTER_VALIDATE_IP) && preg_match('/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/',$cli->telefono)){
       $db->addCliente($cli);
+    }else{
+        crudAlta();
     }
     
-    
+    //devolver errores comprobar que el nombre y el apellido no esten vacios  
 }
 
 function crudPostModificar(){

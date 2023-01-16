@@ -10,7 +10,7 @@ require_once 'app/models/AccesoDatos.php';
 require_once 'app/models/User.php';
 require_once 'app/models/AccesoDatosLogin.php';
 require_once 'app/controllers/crudclientes.php';
-require_once 'vendor\autoload.php';
+require_once 'vendor/autoload.php';
 
 
 
@@ -49,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET" ){
     if ( isset($_GET['Salir'])) {
         switch ( $_GET['Salir']) {
             case "Salir"  : unset($_SESSION['user']);
+            unset($_SESSION['rol']);
             header("Refresh:1");
            
         }
@@ -95,30 +96,35 @@ if ( ob_get_length() == 0){
     $db = AccesoDatos::getModelo();
     $posini = $_SESSION['posini'];
     $tvalores = $db->getClientes($posini,FPAG);
+    //ver si se a ordenado la tabla
     require_once "app/views/list.php";    
 }
 $contenido = ob_get_clean();
+
 
                                                                                                                                                               
 // Muestro la página principal con el contenido generado
 require_once "app/views/principal.php";
 }
 else{
+
+   
     include_once "app/views/login.php";
-    if(isset($_POST['orden'])){
-        if($_POST['orden'] == "EntrarLogin"){
-            $login  = $_POST['login'];
-            $passwd = $_POST['passwd'];
-           
-            $db = AccesoDatosLogin::getModelo();
-            $res = $db->obtenerDatosLogin($login,$passwd);
-            if($res->login == $login){
-                $_SESSION['user'] = $res->login;
-                $_SESSION['rol'] = $res->rol;
-                //include_once "index.php";
-                header("Refresh:1");
-                
+    if(isset($_GET['orden'])){
+        if($_GET['orden'] == "Entrar Login"){
+            if(!empty($_GET['login']) && (!empty($_GET['passwd']))){
+                $login  = $_GET['login'];
+                $passwd = $_GET['passwd'];
+                $db = AccesoDatosLogin::getModelo();
+                $res = $db->obtenerDatosLogin($login,$passwd);
+                if($res->login == $login){
+                    $_SESSION['user'] = $res->login;
+                    $_SESSION['rol'] = $res->rol;
+                    //include_once "index.php";
+                    header("Refresh:1");   
+                }
             }
+
         }
      }
      

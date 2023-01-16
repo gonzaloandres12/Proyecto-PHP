@@ -42,7 +42,7 @@ function crearPdf($cli){
 function paisApartideIP($ip){
     $loc = file_get_contents("http://ip-api.com/json/".$ip);
 	$obj = json_decode($loc);
-    if($obj->status=='success'){
+     if($obj->status=='success'){
         return strtolower($obj->countryCode);  
     }
 	
