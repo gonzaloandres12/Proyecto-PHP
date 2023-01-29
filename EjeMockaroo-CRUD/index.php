@@ -13,7 +13,6 @@ require_once 'app/controllers/crudclientes.php';
 require_once 'vendor/autoload.php';
 
 
-
 if(isset($_SESSION['user'])){
 //---- PAGINACIÓN ----
 $midb = AccesoDatos::getModelo();
@@ -48,8 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET" ){
 
     if ( isset($_GET['Salir'])) {
         switch ( $_GET['Salir']) {
-            case "Salir"  : unset($_SESSION['user']);
-            unset($_SESSION['rol']);
+            case "Salir"  : unset($_SESSION['user']);unset($_SESSION['rol']);unset($_SESSION['intentos']);
             header("Refresh:1");
            
         }
@@ -107,25 +105,41 @@ $contenido = ob_get_clean();
 require_once "app/views/principal.php";
 }
 else{
-
-   
     include_once "app/views/login.php";
     if(isset($_GET['orden'])){
-        if($_GET['orden'] == "Entrar Login"){
-            if(!empty($_GET['login']) && (!empty($_GET['passwd']))){
+        if($_GET['orden'] == "EntrarLogin"){
+            if(!empty($_GET['login']) && !empty($_GET['passwd'])){
                 $login  = $_GET['login'];
                 $passwd = $_GET['passwd'];
+            
                 $db = AccesoDatosLogin::getModelo();
                 $res = $db->obtenerDatosLogin($login,$passwd);
                 if($res->login == $login){
                     $_SESSION['user'] = $res->login;
                     $_SESSION['rol'] = $res->rol;
                     //include_once "index.php";
-                    header("Refresh:1");   
-                }
-            }
+                    header("Location: index.php");   
+                }else{
+                    if(isset( $_SESSION['intentos'])){
+                        $_SESSION['intentos'] += 1; 
+                    }else{
+                        $_SESSION['intentos']  = 1;
+                    }
 
+                   
+                }
+            }else{
+                if(isset( $_SESSION['intentos'])){
+                    $_SESSION['intentos'] += 1; 
+                }else{
+                    $_SESSION['intentos']  = 1;
+                }
+
+            }
         }
+     }else{
+        header("Location:index.php");
+        $_SESSION['intentos']  = 0;
      }
      
 }
