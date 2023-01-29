@@ -7,7 +7,12 @@
 <table>
  <tr><td>id:</td> 
  <td><input type="number" name="id" value="<?=$cli->id ?>"  readonly > </td>
- <td rowspan="7"><img src="app/uploads/.jpg" alt="fotoUsuario"></img>
+ <?php
+ $dir   = "app/uploads"; 
+ $files = glob($dir);
+ $index = array_rand($files);
+ ?>
+ <td rowspan="7"><img src="app/uploads/<?=$files[$index]?>.jpg" alt="fotoUsuario"></img>
  <img src="" alt="localizacion geografica"></img></td> 
 </tr>
  <tr><td>first_name:</td> 
