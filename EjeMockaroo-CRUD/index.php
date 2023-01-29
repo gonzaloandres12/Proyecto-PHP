@@ -111,35 +111,24 @@ else{
             if(!empty($_GET['login']) && !empty($_GET['passwd'])){
                 $login  = $_GET['login'];
                 $passwd = $_GET['passwd'];
-            
                 $db = AccesoDatosLogin::getModelo();
                 $res = $db->obtenerDatosLogin($login,$passwd);
-                if($res->login == $login){
-                    $_SESSION['user'] = $res->login;
-                    $_SESSION['rol'] = $res->rol;
-                    //include_once "index.php";
-                    header("Location: index.php");   
-                }else{
-                    if(isset( $_SESSION['intentos'])){
-                        $_SESSION['intentos'] += 1; 
-                    }else{
-                        $_SESSION['intentos']  = 1;
+                if(!empty($login) || !empty($passwd) ){
+                    if($res->login == $login){
+                        $_SESSION['user'] = $res->login;
+                        $_SESSION['rol'] = $res->rol;
+                        $_SESSION['intentos'] = 0;
+                        //include_once "index.php";
+                        header("Location: index.php");   
                     }
-
-                   
-                }
+                    else{
+                            $_SESSION['intentos']++;   
+                        }
+                    }
             }else{
-                if(isset( $_SESSION['intentos'])){
-                    $_SESSION['intentos'] += 1; 
-                }else{
-                    $_SESSION['intentos']  = 1;
-                }
-
+                 $_SESSION['intentos']++; 
             }
         }
-     }else{
-        header("Location:index.php");
-        $_SESSION['intentos']  = 0;
      }
      
 }

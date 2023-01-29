@@ -1,3 +1,8 @@
+<?php
+if (!isset($_SESSION['intentos'])) {
+    $_SESSION['intentos'] = 0;
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -12,13 +17,12 @@
 		<div id="header">
 			<h1>ACCESO AL SISTEMA</h1>
 		</div>
-		<div id="content">
-			<?php
-
-			if (isset($_SESSION['intentos']) ) { 
-				if($_SESSION['intentos']<=3){
-
-				?>
+		<?php
+		
+		if($_SESSION['intentos'] > 3){
+			echo "<p>Numero de intentos supertado cierra el navegador para volver a intentarlo</p>";
+		}else{?>
+		<div id="content">	
 				<form method="GET">
 					<table style="border: node; ">
 						<tr>
@@ -31,14 +35,9 @@
 						</tr>
 					</table>
 					<input type="submit" name="orden" value="EntrarLogin">
-				</form>
-			<?php
-			}
-			}else{
-				include_once  "index.php";
-			}	?>
-			
+				</form>			
 		</div>
+		<?php }?>
 		<p>
 	</div>
 </body>
