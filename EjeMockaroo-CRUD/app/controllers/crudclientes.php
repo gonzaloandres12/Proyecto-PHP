@@ -70,7 +70,7 @@ function crudPostAlta(){
     $db = AccesoDatos::getModelo();
     //Antes de guardar el cliente coprobar que el email y el telefono no estan repetidos
     $emailValor = $db->comprobarExisteEmail($cli->email);
-    if($emailValor==0 && filter_var($cli->ip_address,FILTER_VALIDATE_IP) && preg_match('/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/',$cli->telefono)){
+    if($emailValor==0 &&  filter_var($cli->ip_address,FILTER_VALIDATE_IP) && preg_match('/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/',$cli->telefono)){
       $db->addCliente($cli);
     }else{
         crudAlta();

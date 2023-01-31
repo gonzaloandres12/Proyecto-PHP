@@ -12,7 +12,6 @@ require_once 'app/models/AccesoDatosLogin.php';
 require_once 'app/controllers/crudclientes.php';
 require_once 'vendor/autoload.php';
 
-
 if(isset($_SESSION['user'])){
 //---- PAGINACIÓN ----
 $midb = AccesoDatos::getModelo();
